@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,19 @@ using RectangleF = System.Drawing.RectangleF;
 
 namespace WurmInventoryOCR
 {
+    public struct WurmItemLine
+    {
+        public string ItemName;
+        public int ItemCount;
+        public float ItemQuality;
+
+        // Confidence between 0-100, of the Name AND Count parts
+        public double NameConfidence;
+
+        // Confidence between 0-100, of the Quality number
+        public double QualityConfidence;
+    }
+
     public class OCRTool
     {
         public static Bitmap CropImage(Image source, ROI section)
@@ -31,7 +45,7 @@ namespace WurmInventoryOCR
             }
         }
 
-        public static void DoStuff(Image image, ROI region)
+        public static List<WurmItemLine> DoStuff(Image image, ROI region)
         {
             var ocr = new IronTesseract();
 
@@ -43,9 +57,11 @@ namespace WurmInventoryOCR
                 image.Save("P:/test2.png", ImageFormat.Png);
 
 
-                ocrInput.AddImage(image); // , new CropRectangle((int)region.X, (int)region.Y, (int)region.Width, (int)region.Height)
+                ocrInput.AddImage(
+                    image); // , new CropRectangle((int)region.X, (int)region.Y, (int)region.Width, (int)region.Height)
 
-                ocr.Configuration.WhiteListCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ(),. 0123456789";
+                ocr.Configuration.WhiteListCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ(),. 0123456789-\"";
                 //ocrInput.SelectTextColors(new[]
                 //{
                 //    new Color(240, 240, 240),
@@ -66,7 +82,31 @@ namespace WurmInventoryOCR
                 ocrInput.HighlightTextAndSaveAsImages(ocr, "P:/test1.png");
 
                 res1 = ocr.Read(ocrInput);
+
+
+
+                bool atQL = false;
+
+                // Count number of lines. The first line will be a item name. Find all lines that start on the left half of the image
+
+                var names = res1.Lines.Where(x => x.X < image.Width / 2);
+                var qualities = res1.Lines.Where(x => x.X > image.Width / 2);
+
+                var result = names.Zip(qualities, (name, quality) =>
+                {
+                    float.TryParse(quality.Text, CultureInfo.InvariantCulture, out var qualityFloat); //#TODO check
+                    return new WurmItemLine()
+                    {
+                        ItemName = name.Text,
+                        ItemQuality = qualityFloat,
+                        ItemCount = 0, //#TODO parse out of text
+                        NameConfidence = name.Confidence,
+                        QualityConfidence = quality.Confidence
+                    };
+                });
+
                 Debugger.Break();
+                return result.ToList();
             }
         }
     }
