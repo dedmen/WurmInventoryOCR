@@ -54,7 +54,7 @@ namespace WurmInventoryOCR
             using (var ocrInput = new OcrInput())
             {
                 image = CropImage(image, region);
-                image.Save("P:/test2.png", ImageFormat.Png);
+                //image.Save("P:/test2.png", ImageFormat.Png);
 
 
                 ocrInput.AddImage(
@@ -79,7 +79,7 @@ namespace WurmInventoryOCR
                 //    new Color(120, 120, 120),
                 //}, 30);
 
-                ocrInput.HighlightTextAndSaveAsImages(ocr, "P:/test1.png");
+                //ocrInput.HighlightTextAndSaveAsImages(ocr, "P:/test1.png");
 
                 res1 = ocr.Read(ocrInput);
 
