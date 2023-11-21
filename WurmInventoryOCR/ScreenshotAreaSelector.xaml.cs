@@ -149,7 +149,7 @@ namespace WurmInventoryOCR
         }
 
 
-        public ScreenshotAreaSelector(Bitmap image, Action<ROI> resultCallback)
+        public ScreenshotAreaSelector(Image image, Action<ROI> resultCallback)
         {
             _resultCallback = resultCallback;
             DataContext = this;

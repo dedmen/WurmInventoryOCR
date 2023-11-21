@@ -116,8 +116,7 @@ namespace WurmInventoryOCR
 
             // Process code below is alternative if window title isn't good enough.
 
-            //var result = openWindows.FirstOrDefault((x) => x.Value.Contains("jackd23"), new KeyValuePair<HWND, string>());
-            var result = openWindows.FirstOrDefault((x) => x.Value.Contains("IDA"), new KeyValuePair<HWND, string>());
+            var result = openWindows.FirstOrDefault((x) => x.Value.Contains("jackd23"), new KeyValuePair<HWND, string>());
 
             if (string.IsNullOrEmpty(result.Value))
             {
