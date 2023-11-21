@@ -1,0 +1,114 @@
+﻿<Window x:Class="WurmInventoryOCR.ScreenshotAreaSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WurmInventoryOCR"
+        mc:Ignorable="d"
+        Title="ScreenshotAreaSelector" Height="450" Width="800">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type local:ROI}">
+            <Grid Background="#01FFFFFF">
+                <Path x:Name="Path" StrokeThickness="2" Stroke="Black"
+                  Stretch="Fill"/>
+                <local:ResizerControl Visibility="Collapsed" Background="#30FFFFFF"
+                                  X="{Binding X}" Y="{Binding Y}"
+                                  ItemWidth="{Binding Width}"
+                                  ItemHeight="{Binding Height}"
+                                  x:Name="Resizer"/>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                    <Setter TargetName="Resizer" Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Shape}" Value="{x:Static local:Shapes.Square}">
+                    <Setter TargetName="Path" Property="Data">
+                        <Setter.Value>
+                            <RectangleGeometry Rect="0,0,10,10"/>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding Shape}" Value="{x:Static local:Shapes.Round}">
+                    <Setter TargetName="Path" Property="Data">
+                        <Setter.Value>
+                            <EllipseGeometry RadiusX="10" RadiusY="10"/>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <Style TargetType="ListBox" x:Key="ROIListBoxStyle">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <ItemsPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ListBoxItem" x:Key="ROIItemStyle">
+            <Setter Property="Canvas.Left" Value="{Binding ActualX}"/>
+            <Setter Property="Canvas.Top" Value="{Binding ActualY}"/>
+            <Setter Property="Height" Value="{Binding ActualHeight}"/>
+            <Setter Property="Width" Value="{Binding ActualWidth}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <ContentPresenter ContentSource="Content"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <DockPanel>
+        <Slider VerticalAlignment="Center" 
+            Maximum="2" Minimum="0" Value="{Binding ScaleFactor}" SmallChange=".1"
+            DockPanel.Dock="Bottom"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Visible"
+                  HorizontalScrollBarVisibility="Visible" x:Name="scr"
+                  ScrollChanged="ScrollChanged">
+
+
+
+            <Thumb DragDelta="Thumb_DragDelta">
+                <Thumb.Template>
+                    <ControlTemplate>
+                        <Grid>
+                            <Image x:Name="ImageElement" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{Binding ImageSource}" >
+                                <Image.LayoutTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="{Binding ScaleFactor}" ScaleY="{Binding ScaleFactor}"/>
+                                    </TransformGroup>
+                                </Image.LayoutTransform>
+                            </Image>
+
+                            <ListBox ItemsSource="{Binding ROIs}" SelectedIndex="0"
+                                 Width="{Binding ActualWidth, ElementName=ImageElement}"
+                                 Height="{Binding ActualHeight,ElementName=ImageElement}"
+                                 VerticalAlignment="Top" HorizontalAlignment="Left"
+                                 Style="{StaticResource ROIListBoxStyle}"
+                                 ItemContainerStyle="{StaticResource ROIItemStyle}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Thumb.Template>
+            </Thumb>
+        </ScrollViewer>
+    </DockPanel>
+
+
+
+</Window>

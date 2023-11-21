@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34310.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{48314D7C-8C46-4296-BD93-BC329C63E68E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WurmInventoryOCR", "WurmInventoryOCR\WurmInventoryOCR.csproj", "{EC93F7F5-B68D-4339-8EBE-3EA32CAA8A8E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48314D7C-8C46-4296-BD93-BC329C63E68E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48314D7C-8C46-4296-BD93-BC329C63E68E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48314D7C-8C46-4296-BD93-BC329C63E68E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48314D7C-8C46-4296-BD93-BC329C63E68E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC93F7F5-B68D-4339-8EBE-3EA32CAA8A8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC93F7F5-B68D-4339-8EBE-3EA32CAA8A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC93F7F5-B68D-4339-8EBE-3EA32CAA8A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC93F7F5-B68D-4339-8EBE-3EA32CAA8A8E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5C393CA-473F-4375-8F74-7CF17EDC8136}
+	EndGlobalSection
+EndGlobal
