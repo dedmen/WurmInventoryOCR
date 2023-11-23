@@ -149,7 +149,7 @@ namespace WurmInventoryOCR
         }
 
 
-        public ScreenshotAreaSelector(Image image, Action<ROI> resultCallback)
+        public ScreenshotAreaSelector(Image image, List<ROI> predefinedROIs, Action<ROI> resultCallback)
         {
             _resultCallback = resultCallback;
             DataContext = this;
@@ -176,7 +176,15 @@ namespace WurmInventoryOCR
             //CanvasElement.Width = bitmap.SourceRect.Width;
             //CanvasElement.Height = bitmap.SourceRect.Height;
 
-            ROIs.Add(new ROI() { ScaleFactor = ScaleFactor, X = 20, Y = 20, Height = 200, Width = 300, Shape = Shapes.Square });
+            if (predefinedROIs.Count == 0)
+                ROIs.Add(new ROI() { ScaleFactor = ScaleFactor, X = 20, Y = 20, Height = 200, Width = 300, Shape = Shapes.Square });
+
+            foreach (var predefinedROI in predefinedROIs)
+            {
+                ROIs.Add(predefinedROI);
+            }
+            
+
         }
 
         protected override void OnClosing(CancelEventArgs e)

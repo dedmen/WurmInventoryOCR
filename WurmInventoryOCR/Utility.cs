@@ -46,7 +46,10 @@ namespace WurmInventoryOCR
             return count;
         }
 
-
+        public static double DistanceTo(this System.Drawing.Point p1, System.Drawing.Point p2)
+        {
+            return Math.Round(Math.Sqrt(Math.Pow((p2.X - p1.X), 2) + Math.Pow((p2.Y - p1.Y), 2)), 1);
+        }
 
 
 

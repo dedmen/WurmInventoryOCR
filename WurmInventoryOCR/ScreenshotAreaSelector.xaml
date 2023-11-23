@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WurmInventoryOCR"
         mc:Ignorable="d"
-        Title="ScreenshotAreaSelector" Height="450" Width="800">
+        Title="ScreenshotAreaSelector" Height="720" Width="1280">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type local:ROI}">
             <Grid Background="#01FFFFFF">
                 <Path x:Name="Path" StrokeThickness="2" Stroke="Black"
                   Stretch="Fill"/>
-                <local:ResizerControl Visibility="Collapsed" Background="#30FFFFFF"
+                <local:ResizerControl Visibility="Visible" Background="#30FFFFFF"
                                   X="{Binding X}" Y="{Binding Y}"
                                   ItemWidth="{Binding Width}"
                                   ItemHeight="{Binding Height}"
